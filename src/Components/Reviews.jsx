@@ -3,11 +3,18 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-
-import data from '../data/db.json'
 import '../Styles/Reviews.css'
+import { useEffect, useState } from 'react';
+import axios from 'axios'
 
 function Reviews() {
+
+  const[data,setData] = useState([])
+  useEffect(() => {
+    axios.get('http://localhost:5000/reviews')
+      .then((response) => setData(response.data))
+      .catch((error) => console.error('Error fetching data:', error));
+  }, []);
 
 
   return (
@@ -15,7 +22,7 @@ function Reviews() {
       <div className='carousell-container'>
 
         <div className='reviews-container'>
-          {data?.reviews?.map((person) => (
+          {data.map((person) => (
 
             <div className='review'>
               <Card>

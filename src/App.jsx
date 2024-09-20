@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Route, Routes, useNavigate } from 'react-router-dom'
 import Home from './pages/Home'
 import ImageSlider from './Components/ImageSlider'
@@ -7,9 +7,10 @@ import FindWorth from './pages/FindWorth'
 import EMICalculator from './pages/EMICalculator'
 import Buyers from './pages/Buyers'
 import Tenants from './pages/Tenants'
-import ListProperty from './pages/ListProperty'
+import ListPropertyCard from './pages/ListPropertyCard'
 import SingleOne from './pages/SingleOne'
 import SingleTwo from './pages/SingleTwo'
+import ListPropertyForm from './pages/ListPropertyForm'
 import '../src/App.css'
 
 import { useState} from 'react'
@@ -28,9 +29,14 @@ import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import { List, ListItem, ListItemButton, ListItemText } from '@mui/material'
 
+import { useDispatch } from 'react-redux'
+import { filteredList } from './redux/EstatelyReducer'
 
-function App() {
 
+function App(){
+
+
+  const dispatch = useDispatch()
   const navigate = useNavigate();
   const [drawerOpen, setDrawerOpen] = useState(false);
   const container = window.document.body;
@@ -65,7 +71,7 @@ function App() {
         {navItems.map((item) => (
           <ListItem key={item} disablePadding >
             <ListItemButton sx={{ textAlign: 'left', ml: 2 }}>
-              <ListItemText primary={item.name} primaryTypographyProps={{ fontSize: '15px' }} onClick={()=>handleNavigation(item.link)} />
+              <ListItemText primary={item.name} primaryTypographyProps={{ fontSize: '15px' }} onClick={()=>{handleNavigation(item.link); dispatch(filteredList([]))}}/>
             </ListItemButton>
           </ListItem>
         ))}
@@ -80,8 +86,8 @@ function App() {
           <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
 
               <h1 style={{ cursor: 'pointer' }} onClick={()=>navigate('/')}>estately.</h1>
-              <h3 className='h3' onClick={()=>navigate('/buy')}>For Buyers</h3>
-              <h3 className='h3' onClick={()=>navigate('/rent')}>For tenants</h3>
+              <h3 className='h3' onClick={()=>{navigate('/buy'); dispatch(filteredList([])) }}>For Buyers</h3>
+              <h3 className='h3' onClick={()=>{navigate('/rent'); dispatch(filteredList([])) }}>For tenants</h3>
 
               <Button className='silver-button' variant="contained"
                 sx={{ fontWeight: 500 }} onClick={()=>navigate('/list_property')}
@@ -128,9 +134,10 @@ function App() {
         <Route path="/emi" element={<EMICalculator />} />
         <Route path="/buy" element={<Buyers />} />
         <Route path="/rent" element={<Tenants />} />
-        <Route path="/list_property" element={<ListProperty />} />
+        <Route path="/list_property" element={<ListPropertyCard />} />
         <Route path="/buy/:id" element={<SingleOne />} />
         <Route path="/rent/:id" element={<SingleTwo />} />
+        <Route path="/listing" element={<ListPropertyForm/>} />
       </Routes>
 
     </>

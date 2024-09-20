@@ -33,15 +33,15 @@
     position : absolute;
     top:70%;
     right : 10%;
-    height : 4rem;
+    height : 2.5rem;
     width: 10rem;
     cursor : pointer;
     border : none;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     border-radius: 0.25rem;
-    font-size : 1.5rem;
+    font-size : 1rem;
     background-color: rgba(255,255,255,1);
-    font-weight: 500;
+    font-weight: 600;
 }
 
 .explore:hover{

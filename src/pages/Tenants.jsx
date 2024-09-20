@@ -8,13 +8,14 @@ import { FaBuilding } from "react-icons/fa";
 import { BiSolidArea } from "react-icons/bi";
 import { FaStairs } from "react-icons/fa6";
 import { MdCurrencyRupee } from "react-icons/md";
-import data from '../data/db.json'
 import { useDispatch, useSelector } from 'react-redux';
 import { filteredList } from '../redux/EstatelyReducer';
 import { useNavigate } from 'react-router';
+import axios from 'axios'
 
 function Tenants() {
 
+    const [data, setData] = useState([])
     const [asc, setAsc] = useState(true)
     const [properties, setProperties] = useState([]);
     const list = useSelector((state) => state.estately.filteredList)
@@ -31,9 +32,24 @@ function Tenants() {
     const [showType, setShowType] = useState(false);
     const [showBhk, setShowBhk] = useState(false);
 
+    useEffect(() => {
+        console.log(list)
+        if (list.length > 0) {
+            setProperties(list);
+        } else {
+            axios.get('http://localhost:5000/rent')
+            .then((response) => {
+                setData(response.data);  
+                setProperties(response.data);  
+                setResults(response.data.length);  
+            })
+            .catch((error) => console.error('Error fetching data:', error));
+        }
+    }, [list,dispatch]);
+
 
     const filterProperties = () => {
-        let updatedList = data?.rent || [];
+        let updatedList = list.length>0 ? list : data;
 
         if (localities.length) {
             updatedList = updatedList.filter(p => localities.includes(p.place));
@@ -52,16 +68,6 @@ function Tenants() {
         filterProperties();
     }, [localities, type, bhk]);
 
-
-    useEffect(() => {
-        console.log(list)
-        if (list.length > 0) {
-            setProperties(list);
-            dispatch(filteredList([]))
-        } else {
-            setProperties(data?.rent || []);
-        }
-    }, []);
 
     const convertPrice = (price) => {
         const number = parseFloat(price.replace(/,/g, ''));

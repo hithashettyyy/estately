@@ -71,7 +71,7 @@ function EMICalculator() {
 
         {display &&
           <div className='worth'>
-            Emi : {parseInt(emi)}
+            Emi : {parseInt(emi)} / month
           </div>
         }
 

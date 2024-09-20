@@ -5,8 +5,16 @@ import { HiOutlineBuildingStorefront } from "react-icons/hi2";
 import { HiOutlineOfficeBuilding } from "react-icons/hi";
 import { BsBuildings } from "react-icons/bs";
 import { FaIndianRupeeSign } from "react-icons/fa6";
+import { useNavigate } from 'react-router';
 
-function ListProperty() {
+function ListPropertyCard() {
+
+    const navigate = useNavigate();
+    
+    const nav = ()=>{
+        navigate('/listing')
+    }
+
     return (
 
         <>
@@ -20,7 +28,7 @@ function ListProperty() {
                     <div className="heading">MONTHLY PLAN</div>
                     <span>List upto 5 properties a month</span>
                     <span>Get upto 10 contacts a day</span>
-                    <button>Get started</button>
+                    <button onClick={nav}>Get started</button>
                 </div>
 
                 <div className="yearly">
@@ -30,7 +38,7 @@ function ListProperty() {
                     <div className="heading" style={{ color: 'white' }}>YEARLY PLAN</div>
                     <span>List upto 100 properties a month</span>
                     <span>Get unlimited contacts</span>
-                    <button id='yearly-btn'>Get started</button>
+                    <button id='yearly-btn' onClick={nav}>Get started</button>
                 </div>
 
                 <div className="quarterly">
@@ -40,7 +48,7 @@ function ListProperty() {
                     <div className="heading">QUARTERLY PLAN</div>
                     <span>List upto 50 properties a month</span>
                     <span>Get upto 50 contacts a day</span>
-                    <button>Get started</button>
+                    <button onClick={nav}>Get started</button>
                 </div>
 
             </div>
@@ -49,4 +57,4 @@ function ListProperty() {
     )
 }
 
-export default ListProperty
+export default ListPropertyCard
